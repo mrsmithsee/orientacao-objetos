@@ -4,9 +4,16 @@ class CartaoDeCredito{
   public $dataDeValidade;
 }
 
+//require 'lib/Carbon.php';
+//use Carbon\Carbon;
+
+
 $cartao = new CartaoDeCredito();
 $cartao->numero = "111111";
 $cartao->dataDeValidade = "01/01/2013";
+
+//$cartao->dataDeValidade =
+//   Carbon::createFromDate(2022, 3, 7, 'America/Sao_Paulo');
 
 $cartao2 = new CartaoDeCredito();
 $cartao2->numero = "222222";
