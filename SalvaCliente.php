@@ -18,19 +18,26 @@
     $cliente = new Cliente();
     $cliente->nome = $_POST['nome'];
     $cliente->email = $_POST['email'];
+    // nao podemos concatenar entrada de dados com SQL
+    // $sql = "INSERT INTO clientes values (null, '$cliente->nome', '$cliente->email')";
+    // passamos como parametro para o driver:
+    $sql = "INSERT INTO clientes (nome, email) values (?, ?)";
 
-    $sql = "INSERT INTO clientes values (null, '$cliente->nome', '$cliente->email')";
-
-    $saida = $conn->query($sql);
+    //$saida = $conn->query($sql);
+    $comando = $conn->prepare($sql);
+    $comando->bind_param("ss", $cliente->nome, $cliente->email);
+    $saida = $comando->execute();
 
      ?>
      <h1>Cliente</h1>
      <?php if ($saida === TRUE) { ?>
      <h3>Cliente salvo com sucesso</h3>
-   <?php } else { ?>
-     //vardump($conn);
+   <?php } else {
+     //var_dump($conn);?>
      <h3>Erro: <?= $conn->error ?></h3>
+     <h3><?= $sql ?></h3>
    <?php }
+       $comando->close();
        $conn->close();
     ?>
 
